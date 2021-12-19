@@ -1,5 +1,6 @@
 <?php
-//Grab wifi credentials
+//Using GET instead of POST
+//TODO: Could switch to POST with TLS
 $wifissid = $_GET["ssid"];
 $wifikey = $_GET["key"];
 $username = $_GET["uname"];
@@ -22,6 +23,7 @@ $wificonf = '    wifis:
 //format wifi credentials into template
 $wificonf = sprintf($wificonf, $wifissid, $wifikey);
 
+//Template for go-auth.conf
 $mosquitto_db = 'auth_plugin /etc/mosquitto/conf.d/go-auth.so
 allow_anonymous false
 auth_opt_backends mysql
@@ -35,18 +37,19 @@ auth_opt_mysql_password %s
 auth_opt_mysql_connect_tries 5
 auth_opt_mysql_allow_native_passwords true
 auth_opt_mysql_userquery select pass FROM musers WHERE username = ? limit 1';
+//Format template with username and password
 $mosquitto_db = sprintf($mosquitto_db, $username, $password);
 
 
 if($wifissid != ""){
     try{
 	//ADD WIFI CONFIG TO NETPLAN
-        $fp = fopen($netconf,'a') or die("not working1");
+        $fp = fopen($netconf,'a');
         fwrite($fp, $wificonf);
         fclose($fp);
 
 	//ADD USERNAME AND PASSWORD TO MOSQUITTO DB CONFIG
-	$fp = fopen($mosquittoconf, 'a') or die("not working2");
+	$fp = fopen($mosquittoconf, 'a');
 	fwrite($fp, $mosquitto_db);
 	fclose($fp);
 
@@ -65,6 +68,8 @@ if($wifissid != ""){
         $newroot = 'sudo echo -e "%s\n%s" | passwd root';
         $newroot = sprintf($newroot, $password, $password);
         echo shell_exec($newroot);
+	
+	//Apply netplan and reboot
         shell_exec("sudo /usr/sbin/netplan apply");
         shell_exec("sudo /usr/sbin/shutdown -r now");
     
