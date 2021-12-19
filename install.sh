@@ -1,8 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get install hostapd dnsmasq apache2 php mariadb-server ufw python libwebsockets15 libwebsockets-dev libc-ares2 libc-ares-dev openssl uuid uuid-dev git make golang-go libcjson1 libcjson-dev net-tools
-export PATH=$PATH:/usr/local/go/bin:~/go/bin
+apt-get install -y hostapd dnsmasq apache2 php mariadb-server mosquitto ufw python libwebsockets15 libwebsockets-dev libc-ares2 libc-ares-dev openssl uuid uuid-dev make golang-go libcjson1 libcjson-dev net-tools
 
 systemctl disable dnsmasq
 systemctl disable apache2
@@ -34,7 +33,7 @@ sudo chown -R mosquitto:mosquitto /var/lib/mosquitto/
 mkdir goauth
 cd goauth
 git clone https://github.com/iegomez/mosquitto-go-auth
-cd mosqsuitto-go-auth
+cd mosquitto-go-auth
 make
 cp ./go-auth.so /etc/mosquitto/conf.d/go-auth.so
 
