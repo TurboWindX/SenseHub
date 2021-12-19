@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#/usr/bin/systemctl stop systemd-resolved
+#/usr/bin/systemctl start /usr/sbin/dnsmasq
+/usr/sbin/ifconfig wlan0 up 192.168.69.1 netmask 255.255.255.0
+/usr/sbin/route add -net 192.168.69.0 netmask 255.255.255.0 gw 192.168.69.1
+/usr/bin/systemctl start apache2
+/usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
+/usr/sbin/dnsmasq
+
+/usr/bin/systemctl start mysql
+/usr/bin/mysql -uroot -e "CREATE DATABASE mosquitto;"
+/usr/bin/mysql -uroot < /root/mosquitto-users-db.sql
+/usr/bin/mysql -uroot -e "DROP USER ''@localhost"
+/usr/bin/mysql -uroot -e "DROP USER ''@'$(hostname)'"
+/usr/bin/mysql -uroot -e "DROP DATABASE test"
+/usr/bin/mysql -uroot -e "FLUSH PRIVILEGES"
