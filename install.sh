@@ -1,10 +1,13 @@
 #!/bin/bash
 
 apt-get update
-apt-get install hostapd dnsmasq apache2 mosquitto php mariadb-server ufw python libwebsockets15 libwebsockets-dev libc-ares2 libc-ares-dev openssl uuid uuid-dev git make golang-go libcjson1 libcjson-dev
+apt-get install hostapd dnsmasq apache2 php mariadb-server ufw python libwebsockets15 libwebsockets-dev libc-ares2 libc-ares-dev openssl uuid uuid-dev git make golang-go libcjson1 libcjson-dev net-tools
 export PATH=$PATH:/usr/local/go/bin:~/go/bin
 
-git clone https://github.com/TurboWindX/SenseAll
+systemctl disable dnsmasq
+systemctl disable apache2
+systemctl disable hostapd
+systemctl disable mysql
 
 ufw allow 80
 ufw allow 3306
