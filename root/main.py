@@ -14,8 +14,11 @@ if(data['configmode'] == True):
     json.dump(data, open('/root/config.json', "w"), indent=4)
 
 if(data['configmode'] == False):
+    #START MYSQL
     subprocess.call(['/usr/bin/systemctl start mysql'], shell=True)
-    #START MOSQUITTO-BROKER, START MOSQUITTO-CLIENT
+    #CREATE PID FILE
     subprocess.call(['mkdir /var/run/mosquitto/'],shell=True)
+    #CHOWN PID FILE
     subprocess.call(['chown -R mosquitto:mosquitto /var/run/mosquitto/'],shell=True)
+    #START MOSQUITTO-BROKER WITH SPECIFIC CONFIG FILE
     subprocess.call(['/usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf'], shell=True)
