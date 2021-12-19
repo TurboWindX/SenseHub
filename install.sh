@@ -22,13 +22,13 @@ wget http://mosquitto.org/files/source/mosquitto-2.0.9.tar.gz
 tar xzvf mosquitto-2.0.9.tar.gz
 cd mosquitto-2.0.9
 make
-sudo make install
-sudo groupadd mosquitto
-sudo useradd -s /sbin/nologin mosquitto -g mosquitto -d /var/lib/mosquitto
-sudo mkdir -p /var/log/mosquitto/ /var/lib/mosquitto/ /var/run/mosquitto/
-sudo chown mosquitto:mosquitto /var/run/mosquitto
-sudo chown -R mosquitto:mosquitto /var/log/mosquitto/
-sudo chown -R mosquitto:mosquitto /var/lib/mosquitto/
+make install
+groupadd mosquitto
+useradd -s /sbin/nologin mosquitto -g mosquitto -d /var/lib/mosquitto
+mkdir -p /var/log/mosquitto/ /var/lib/mosquitto/ /var/run/mosquitto/
+chown mosquitto:mosquitto /var/run/mosquitto
+chown -R mosquitto:mosquitto /var/log/mosquitto/
+chown -R mosquitto:mosquitto /var/lib/mosquitto/
 
 
 mkdir goauth
@@ -42,7 +42,11 @@ sudo echo -e "interface=wlan0\nhw_mode=g\ncountry_code=US\nchannel=7\nht_capab=[
 sudo echo -e "no-resolv\ninterface=wlan0\ndhcp-range=192.168.69.11,192.168.69.40,24h\ndhcp-option=1,255.255.255.0\ndhcp-option=3,192.168.69.1\ndhcp-option=6,192.168.69.1\nserver=8.8.8.8\nlisten-address=127.0.0.1\nbind-dynamic" > /etc/dnsmasq.conf
 
 cp /home/ubuntu/SenseHub/html/index.php /var/www/html/index.php
-cp /home/ubuntu/SenseHub/root/config.json /root/config.json
+cp -r /home/ubuntu/SenseHub/root/ /root/
 chmod 666 /root/config.json
-cp /home/ubuntu/SenseHub/root/reset.sh /root/reset.sh
 chmod +x /root/reset.sh
+chmod +x /root/sense
+
+echo "@reboot /root/sense" >> scron
+crontab scron
+rm scron
