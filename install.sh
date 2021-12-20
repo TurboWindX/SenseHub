@@ -8,6 +8,7 @@ systemctl disable apache2
 systemctl disable hostapd
 systemctl disable mysql
 systemctl disable ssh
+systemctl disable mosquitto
 
 ufw allow 80
 ufw allow 3306

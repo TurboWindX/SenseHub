@@ -10,7 +10,7 @@
 
 /usr/bin/systemctl start mysql
 /usr/bin/mysql -uroot -e "CREATE DATABASE mosquitto;"
-/usr/bin/mysql -uroot < /root/mosquitto-users-db.sql
+/usr/bin/mysql -uroot -D mosquitto < /root/mosquitto-users-db.sql
 /usr/bin/mysql -uroot -e "DROP USER ''@localhost"
 /usr/bin/mysql -uroot -e "DROP USER ''@'$(hostname)'"
 /usr/bin/mysql -uroot -e "DROP DATABASE test"
