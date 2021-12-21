@@ -43,6 +43,7 @@ sudo echo -e "interface=wlan0\nhw_mode=g\ncountry_code=US\nchannel=7\nht_capab=[
 sudo echo -e "no-resolv\ninterface=wlan0\ndhcp-range=192.168.69.11,192.168.69.40,24h\ndhcp-option=1,255.255.255.0\ndhcp-option=3,192.168.69.1\ndhcp-option=6,192.168.69.1\nserver=8.8.8.8\nlisten-address=127.0.0.1\nbind-dynamic" > /etc/dnsmasq.conf
 
 cp /home/ubuntu/SenseHub/html/index.php /var/www/html/index.php
+cp /home/ubuntu/SenseHub/hostapd/hostapd.conf /etc/hostapd/hostapd.conf
 cp -r /home/ubuntu/SenseHub/root/ /
 chmod 666 /root/config.json
 chmod +x /root/reset.sh
