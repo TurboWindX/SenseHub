@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get install -y hostapd dnsmasq apache2 php mariadb-server mosquitto ufw python libwebsockets15 libwebsockets-dev libc-ares2 libc-ares-dev openssl uuid uuid-dev make golang-go libcjson1 libcjson-dev net-tools
+apt-get install -y wget git sudo cron hostapd dnsmasq apache2 php mariadb-server mosquitto ufw python libwebsockets15 libwebsockets-dev libc-ares2 libc-ares-dev openssl uuid uuid-dev make golang-go libcjson1 libcjson-dev net-tools
 
 systemctl disable dnsmasq
 systemctl disable apache2
