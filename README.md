@@ -9,4 +9,4 @@ sudo ./install.sh</br>
 <b>Tested on Ubuntu Server 20.04LTS 64-bit</b>
 </br>
 
-Turn a raspberry pi into a SenseAll on-premises MQTT broker.</br>
+Installation script to transform a docker-enabled raspberry pi into a SenseAll on-premises MQTT broker.</br>
